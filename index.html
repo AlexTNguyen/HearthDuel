@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="collection.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <title>HearthDuel</title>
+  <script>
+	window.onload = function doIt() { 
+		var output = $.ajax({
+	    url: 'https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
+	    type: 'GET', // The HTTP Method, can be GET POST PUT DELETE etc
+	    data: {}, // Additional parameters here
+	    dataType: 'json',
+	    success: function(data) {
+	    	//
+	        //Change data.source to data.something , where something is whichever part of the object you want returned.
+	        //To see the whole object you can output it to your browser console using:
+	        console.log(data);
+	        var jsondata = [data.Classic, data.Naxxramas, data["Goblins vs Gnomes"], data["Blackrock Mountain"], data["The Grand Tournament"], data["The League of Explorers"]];
+	        count = 0; 
+	        var classic;
+	        var naxx;
+	        var gvg;
+	        var brm;
+	        var tgt; 
+	        var tloe; 
+	        while(count < 6) {	        
+	        	currentData = jsondata[count];
+		        for(var i = 0; i < currentData.length; i++) {
+		        	if(currentData[i].hasOwnProperty('img')) { 
+		        		var cardId = JSON.stringify(currentData[i].cardId); 
+		        		cardId = cardId.replace("\"", "\'");
+		        		cardId = cardId.replace("\"", "\'");
+		        		var cardClass = "Druid"; 
+		        		if(currentData[i].hasOwnProperty('playerClass')){
+		        			cardClass = JSON.stringify(currentData[i].playerClass); 
+		        			cardClass = cardClass.replace("\"", "");
+		        			cardClass = cardClass.replace("\"", "");
+		        		}
+		        		else
+		        			cardClass = "Neutral"; 
+		        		currentCardSet = JSON.stringify(currentData[i].cardSet);
+		        		cardId = cardId.replace("\"", "");
+		        		cardId = cardId.replace("\"", "");
+		        		currentCardSet += "[]";
+		        		document.getElementById(cardClass).innerHTML += "<div class = \"card\"><input type = \"image\" class = \"image\" src = "  + JSON.stringify(currentData[i].img) + " onclick=\"increase(" + cardId + ")\"></input><br><input readonly type = \"text\" id = " + JSON.stringify(currentData[i].cardId) + " value = \"0\"" + "name = \"" + currentCardSet + "\"></input><br></div>"; 
+			 
+			      	}
+
+		        }
+		    	count++; 
+		    }
+	    },
+	    error: function(err) { alert(err); },
+	    beforeSend: function(xhr) {
+	    xhr.setRequestHeader("X-Mashape-Authorization", "oav7pClMknmshXTPhf1OuT9OBJYap1AEaqjjsnKCzX4kh0sd8v"); // Enter here your Mashape key
+    	}
+    });
+    };
+   
+   
+
+    function increase(cardId) {
+    	if(document.getElementById(cardId).value == null)
+    		document.getElementById(cardId).value = 2; 
+    	else
+    		document.getElementById(cardId).value--;
+    	if(document.getElementById(cardId).value < 0)
+    		document.getElementById(cardId).value = 2;
+    }  
+
+</script>
+</head>
+<body>
+	<div id = "output">
+	<form id ='collection' method = 'post' action = '/sendCollection'> 
+	<label for = "name">Collection Name: </label><input type ='text' id = 'name' name = 'collectionName'/>
+	<input type ='submit' id = 'submit' name = 'Submit' value = 'Submit Collection' />	
+  <ul class="nav nav-tabs">
+  <li class = "active"><a data-toggle="tab" href="#Druid">Druid</a></li>
+  <li><a data-toggle="tab" href="#Hunter">Hunter</a></li>
+  <li><a data-toggle="tab" href="#Mage">Mage</a></li>
+  <li><a data-toggle="tab" href="#Paladin">Paladin</a></li>
+  <li><a data-toggle="tab" href="#Priest">Priest</a></li>
+  <li><a data-toggle="tab" href="#Rogue">Rogue</a></li>
+  <li><a data-toggle="tab" href="#Shaman">Shaman</a></li>
+  <li><a data-toggle="tab" href="#Warlock">Warlock</a></li>
+  <li><a data-toggle="tab" href="#Warrior">Warrior</a></li>
+  <li><a data-toggle="tab" href="#Neutral">Neutral</a></li>
+</ul>
+
+  <div class="tab-content">
+
+  <div id="Druid" class="tab-pane fade in active">
+    <h3>DRUID</h3>
+
+  </div>
+  <div id="Hunter" class="tab-pane fade">
+    <h3>HUNTER</h3>
+  </div>
+  <div id="Mage" class="tab-pane fade">
+    <h3>MAGE</h3>
+  </div>
+  <div id="Paladin" class="tab-pane fade">
+    <h3>PALADIN</h3>
+  </div>
+  <div id="Priest" class="tab-pane fade">
+    <h3>PRIEST</h3>
+  </div>
+  <div id="Rogue" class="tab-pane fade">
+    <h3>ROGUE</h3>
+  </div>
+  <div id="Shaman" class="tab-pane fade">
+    <h3>SHAMAN</h3>
+  </div>
+  <div id="Warlock" class="tab-pane fade">
+    <h3>WARLOCK</h3>
+  </div>
+  <div id="Warrior" class="tab-pane fade">
+    <h3>WARRIOR</h3>
+  </div>
+  <div id="Neutral" class="tab-pane fade">
+    <h3>NEUTRAL</h3>
+  </div>
+</form> 
+</div>
+</div>
+  
+</body>
+</html>

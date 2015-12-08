@@ -1,0 +1,16 @@
+{
+  "name": "hearthduel",
+  "version": "1.0.0",
+  "description": "Arena simulator",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Nguyen",
+  "dependencies": {
+		"express": "latest",
+		"mongodb": "latest",
+		"body-parser": "latest",
+		"validator":"latest"
+	}
+}

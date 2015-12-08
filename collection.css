@@ -1,0 +1,28 @@
+#output { 
+	margin: 0 auto;
+	width: 810px;
+	border: 1px solid black;
+}
+
+.image {
+	width: 200px;
+	height: auto;
+}
+
+input {
+	width: 50px;
+    display: block;
+    margin : 0 auto;
+    text-align:center;
+}
+
+.card {
+	width: 200px;
+	height: auto;
+	display: inline-block;
+	text-align:center;
+}
+
+#submit {
+	width: auto;
+}
